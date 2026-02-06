@@ -1,0 +1,11 @@
+http://127.0.0.1:8000/api/gerar-validacao
+{
+    "email": "exemplo@gmail.com",
+    "origin": "kotlin-app"
+}
+
+
+http://127.0.0.1:8000/confirmar-email/c29ebd72-a857-406b-b144-9146cec5c7fd
+
+
+http://127.0.0.1:8000/api/status/teste@email.com

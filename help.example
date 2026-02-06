@@ -1,0 +1,56 @@
+exemplo de chamada de api no kotlin
+
+
+--------JSON que o Kotlin vai enviar:-------
+{
+  "email": "joao@email.com",
+  "origin": "android_app"
+}
+
+
+
+-------Data class (representa o body):--------
+
+data class EmailValidationRequest(
+    val email: String,
+    val origin: String
+)
+
+
+
+----------Interface da API (Retrofit):-------
+
+interface ApiService {
+
+    @POST("api/gerar-validacao")
+    suspend fun gerarValidacao(
+        @Body request: EmailValidationRequest
+    ): Response<Unit>
+}
+
+
+
+--------Retrofit configurado:----------
+
+val retrofit = Retrofit.Builder()
+    .baseUrl("https://api.meusite.com/")
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+
+val api = retrofit.create(ApiService::class.java)
+
+
+
+-------Chamando a API:---------
+
+val request = EmailValidationRequest(
+    email = "joao@email.com",
+    origin = "android_app"
+)
+val response = api.gerarValidacao(request)
+
+if (response.isSuccessful) {
+    // Email enviado com sucesso
+} else {
+    // Erro
+}
