@@ -21,13 +21,34 @@ class EmailValidationController extends Controller
         $expiresAt = now()->addMinutes(30);
         $origin = $request->input('origin', 'web');
 
-        DB::table('validados')->insert([
-            'email' => $email,
-            'token' => $token,
-            'origem' => $origin,
-            'expires_at' => $expiresAt,
-            'created_at' => now(),
-        ]);
+        $existe = DB::table('validados')
+            ->select('email', 'validado')
+            ->where('email', $email)
+            ->first();
+
+        if($existe && $existe->validado == 1){
+            return response()->json([
+                'message' => 'esse email ja foi verificado'
+            ], 400);
+        }
+        
+        if($existe){
+            DB::table('validados')
+                ->where('email', $email)
+                ->update([
+                    'token' => $token,
+                    'expires_at' => $expiresAt,
+                    'updated_at' => now(),
+                ]);
+        } else {
+            DB::table('validados')->insert([
+                'email' => $email,
+                'token' => $token,
+                'origem' => $origin,
+                'expires_at' => $expiresAt,
+                'created_at' => now(),
+            ]);
+        }
 
         $link = url("/confirmar-email/{$token}");
 

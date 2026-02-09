@@ -24,8 +24,8 @@
                 </svg>
             </div>
             <div class="content">
-                <span class="title">Erro ao validar email</span>
-                <p class="message">Ocorreu um erro ao tentar validar seu email. Tente novamente ou entre em contato com o suporte.</p>
+                <span class="title">{asunto}</span>
+                <p class="message">{menssagem}</p>
             </div>
         </div>
     </div>

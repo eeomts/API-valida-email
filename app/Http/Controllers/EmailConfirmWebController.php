@@ -12,6 +12,7 @@ class EmailConfirmWebController extends Controller
             ->first();
 
         if (!$registro) {
+            
             return view('error');
         }
 
