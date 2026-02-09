@@ -22,19 +22,21 @@ class EmailValidationController extends Controller
         $origin = $request->input('origin', 'web');
 
         $existe = DB::table('validados')
-            ->select('email', 'validado')
+            ->select('email', 'validado', 'origem')
             ->where('email', $email)
+            ->where('origem', $origin)
             ->first();
 
         if($existe && $existe->validado == 1){
             return response()->json([
-                'message' => 'esse email ja foi verificado'
+                'message' => 'esse email ja foi verificado para o aplicativo ' . $origin
             ], 400);
         }
         
         if($existe){
             DB::table('validados')
                 ->where('email', $email)
+                ->where('origem', $origin)
                 ->update([
                     'token' => $token,
                     'expires_at' => $expiresAt,

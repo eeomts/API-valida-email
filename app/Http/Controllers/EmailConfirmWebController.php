@@ -25,7 +25,7 @@ class EmailConfirmWebController extends Controller
                 ->where('id', $registro->id)
                 ->update([
                     'validado' => 1,
-                    'updated_at' => now(),
+                    
                 ]);
         }
 
